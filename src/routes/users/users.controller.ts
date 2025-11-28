@@ -1,5 +1,6 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { UsersService } from './users.service';
+import envConfig from 'src/shared/config';
 
 @Controller('users')
 export class UsersController {
