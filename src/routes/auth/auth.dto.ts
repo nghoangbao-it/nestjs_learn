@@ -1,4 +1,4 @@
-import { Exclude } from 'class-transformer';
+import { Exclude, Expose } from 'class-transformer';
 import { IsString } from 'class-validator';
 
 export class UserLoginDTO {
@@ -18,6 +18,11 @@ export class RegisterResDTO {
     @Exclude() password: string;
     createdAt: Date;
     updatedAt: Date;
+
+    @Expose()
+    get displayId() {
+        return `USER-${this.id}`;
+    }
 
     constructor(partial: Partial<RegisterResDTO>) {
         Object.assign(this, partial);

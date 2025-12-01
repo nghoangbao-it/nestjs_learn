@@ -7,12 +7,13 @@ export class AuthController {
     constructor(private readonly authService: AuthService) {}
 
     @Post('register')
-    @SerializeOptions({ type: RegisterResDTO })
+    // @SerializeOptions({ type: RegisterResDTO })
     async registerUser(@Body() body: RegisterBodyDTO){
         // console.log('RegisterBodyDTO:', body);
         // return body;
         const newUser = await this.authService.registerUser(body);
-        return newUser
+        // return newUser
+        return new RegisterResDTO(newUser);
     }
 
     @Delete(':id')
