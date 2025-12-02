@@ -36,10 +36,13 @@ export class AuthService {
     if (!user) {
       throw new UnauthorizedException('Invalid email');
     }
+    console.log('user:', user);
+    console.log('password:', body.password);
     const isPassswordValid = this.hashingService.compare(
       body.password,
       user.password,
     );
+    console.log('isPassswordValid:', isPassswordValid);
     if (!isPassswordValid) {
       throw new UnauthorizedException('Password is incorrect');
     }
@@ -79,9 +82,7 @@ export class AuthService {
       const tokens = await this.generateTokens(payload.userId);
       return tokens;
     } catch (error) {
-      const err = isRecordNotFoundPrismaError(error);
-      err.
-      if () {
+      if (isRecordNotFoundPrismaError(error)) {
         throw new UnauthorizedException('Refresh token was invoked');
       }
       throw new UnauthorizedException('Invalid refresh token');

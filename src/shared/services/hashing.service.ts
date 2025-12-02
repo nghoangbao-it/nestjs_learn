@@ -7,7 +7,7 @@ export class HashingService {
         return hashSync(data, salt);
     }
 
-    compare(value: string, hashedData:string):string{
-        return hashSync(value, hashedData);
+    compare(value: string, hashedData:string):boolean{
+        return compareSync(value, hashedData);
     }
 }
