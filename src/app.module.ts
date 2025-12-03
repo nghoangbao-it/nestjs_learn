@@ -1,7 +1,7 @@
 import { ClassSerializerInterceptor, Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { PostsModule } from './posts/posts.module';
+import { PostsModule } from './routes/posts/posts.module';
 import { UsersModule } from './routes/users/users.module';
 import { SharedModule } from './shared/shared.module';
 import { HashingService } from './shared/services/hashing.service';
