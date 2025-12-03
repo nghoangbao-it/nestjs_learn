@@ -11,13 +11,16 @@ import {
 import { PostsService } from './posts.service';
 import { ApiKeyGuard } from 'src/shared/guards/api-key.guard';
 import { AccessTokenGuard } from 'src/shared/guards/access-token.guard';
+import { Auth } from 'src/shared/decorators/auth.decorator';
+import { AuthType, ConditionGuard } from 'src/shared/constants/auth.constant';
 
 @Controller('posts')
 export class PostsController {
   constructor(private readonly postService: PostsService) {}
 
-  @UseGuards(ApiKeyGuard)
-  @UseGuards(AccessTokenGuard)
+  // @UseGuards(ApiKeyGuard)
+  // @UseGuards(AccessTokenGuard)
+  @Auth([AuthType.Bearer, AuthType.ApiKey], ConditionGuard.Or)
   @Get()
   getPosts() {
     return this.postService.getPosts();
