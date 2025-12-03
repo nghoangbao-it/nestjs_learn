@@ -9,6 +9,7 @@ import { PrismaService } from 'src/shared/services/prisma.service';
 import { TokenService } from 'src/shared/services/token.service';
 import {
   LoginBodyDTO,
+  LogoutBodyDTO,
   RefreshTokenBodyDTO,
   RegisterBodyDTO,
 } from './auth.dto';
@@ -102,6 +103,20 @@ export class AuthService {
         throw new ConflictException('User with this email already exists');
       }
       throw error;
+    }
+  }
+
+  async logout(body: LogoutBodyDTO) {
+    try {
+      const token = body.refreshToken;
+      const payload = await this.tokenService.verifyRefreshToken(token);
+      await this.prismaService.refreshToken.delete({ where: { token: token } });
+      return 'Logout successful';
+    } catch (error) {
+      if (isRecordNotFoundPrismaError(error)) {
+        throw new UnauthorizedException('Refresh token was invoked');
+      }
+      throw new UnauthorizedException('Invalid refresh token');
     }
   }
 

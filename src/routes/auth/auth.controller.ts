@@ -12,7 +12,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { LoginBodyDTO, RefreshTokenBodyDTO, RegisterBodyDTO, RegisterResDTO } from './auth.dto';
+import { LoginBodyDTO, LogoutBodyDTO, RefreshTokenBodyDTO, RegisterBodyDTO, RegisterResDTO } from './auth.dto';
 import { AccessTokenGuard } from 'src/shared/guards/access-token.guard';
 
 @Controller('auth')
@@ -33,12 +33,16 @@ export class AuthController {
     return new RegisterResDTO(newUser);
   }
 
-  @UseGuards(AccessTokenGuard)
   @Post('refresh-token')
   @HttpCode(200)
   async refreshToken(@Body() body: RefreshTokenBodyDTO) {
     const tokens = await this.authService.refreshTokens(body);
     return tokens;
+  }
+
+  @Post('logout')
+  async logout(@Body() body: LogoutBodyDTO) {
+    return this.authService.logout(body);
   }
 
   @Delete(':id')
