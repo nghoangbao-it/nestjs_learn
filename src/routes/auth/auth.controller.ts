@@ -8,11 +8,12 @@ import {
   Param,
   Post,
   SerializeOptions,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginBodyDTO, RefreshTokenBodyDTO, RegisterBodyDTO, RegisterResDTO } from './auth.dto';
-import { RefreshToken } from '@prisma/client';
+import { AccessTokenGuard } from 'src/shared/guards/access-token.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -32,6 +33,7 @@ export class AuthController {
     return new RegisterResDTO(newUser);
   }
 
+  @UseGuards(AccessTokenGuard)
   @Post('refresh-token')
   @HttpCode(200)
   async refreshToken(@Body() body: RefreshTokenBodyDTO) {
