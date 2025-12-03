@@ -11,6 +11,8 @@ import {
 import { PostsService } from './posts.service';
 import { Auth } from 'src/shared/decorators/auth.decorator';
 import { AuthType, ConditionGuard } from 'src/shared/constants/auth.constant';
+import { ActiveUser } from 'src/shared/decorators/active-user.decorator';
+import { CreatePostBodyDTO } from './posts.dto';
 
 @Controller('posts')
 export class PostsController {
@@ -26,8 +28,8 @@ export class PostsController {
 
   @Post()
   @Auth([AuthType.Bearer])
-  addPost(@Body() body: any) {
-    return this.postService.addPost(body);
+  addPost(@Body() body: CreatePostBodyDTO, @ActiveUser('userId') userId: number) {
+    return this.postService.addPost(userId, body);
   }
 
   @Get(':id')

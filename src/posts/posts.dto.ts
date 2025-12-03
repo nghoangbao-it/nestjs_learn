@@ -1,3 +1,4 @@
+import { Expose } from 'class-transformer';
 import { IsNumber, IsString } from 'class-validator';
 
 export class CreatePostBodyDTO {
@@ -5,12 +6,11 @@ export class CreatePostBodyDTO {
   title: string;
   @IsString()
   content: string;
-  @IsNumber()
-  authorId: number;
 }
 
 export class CreatePostResDTO extends CreatePostBodyDTO {
   id: number;
+  authorId: number;
   createdAt: Date;
   updatedAt: Date;
 

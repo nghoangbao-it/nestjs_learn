@@ -16,9 +16,12 @@ export class PostsService {
     return postDetail;
   }
 
-  async addPost(body: CreatePostBodyDTO) {
+  async addPost(userId: number, body: CreatePostBodyDTO) {
     const newPost = await this.prismaService.post.create({
-      data: body,
+      data: {
+        ...body,
+        authorId: userId,
+      },
     });
     return new CreatePostResDTO(newPost);
   }
