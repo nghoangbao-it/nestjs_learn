@@ -36,13 +36,10 @@ export class AuthService {
     if (!user) {
       throw new UnauthorizedException('Invalid email');
     }
-    console.log('user:', user);
-    console.log('password:', body.password);
     const isPassswordValid = this.hashingService.compare(
       body.password,
       user.password,
     );
-    console.log('isPassswordValid:', isPassswordValid);
     if (!isPassswordValid) {
       throw new UnauthorizedException('Password is incorrect');
     }

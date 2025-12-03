@@ -1,6 +1,7 @@
 import { plainToInstance } from 'class-transformer';
 import { IsString, validateSync } from 'class-validator';
-
+import dotenv from 'dotenv';
+dotenv.config();
 class ConfigSchema {
   @IsString()
   DATABASE_URL: string;
@@ -12,6 +13,8 @@ class ConfigSchema {
   REFRESH_TOKEN_SECRET: string;
   @IsString()
   REFRESH_TOKEN_EXPIRE_IN: string;
+  @IsString()
+  SECRECT_API_KEY: string;
 }
 
 const configServer = plainToInstance(ConfigSchema, process.env);
@@ -24,9 +27,8 @@ if (validatedErrors.length > 0) {
     value: err.value,
     constraints: err.constraints,
   }));
-//   console.log(customListError)
+  console.log(customListError)
 }
-console.log(validatedErrors)
 
 const envConfig = configServer;
 export default envConfig;

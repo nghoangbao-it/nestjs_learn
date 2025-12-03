@@ -1,8 +1,7 @@
 import { defineConfig, env } from "prisma/config";
 
-import dotenv from 'dotenv'
-import e from "express";
-dotenv.config()
+// import dotenv from 'dotenv'
+// dotenv.config()
 
 
 export default defineConfig({

@@ -6,17 +6,18 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import { PostsService } from './posts.service';
+import { ApiKeyGuard } from 'src/shared/guards/api-key.guard';
+import { AccessTokenGuard } from 'src/shared/guards/access-token.guard';
 
 @Controller('posts')
 export class PostsController {
   constructor(private readonly postService: PostsService) {}
-  @Get()
-  sayHello() {
-    return this.postService.sayHello();
-  }
 
+  @UseGuards(ApiKeyGuard)
+  @UseGuards(AccessTokenGuard)
   @Get()
   getPosts() {
     return this.postService.getPosts();
