@@ -1,21 +1,26 @@
 import { Injectable } from '@nestjs/common';
+import { PrismaService } from 'src/shared/services/prisma.service';
+import { CreatePostBodyDTO, CreatePostResDTO } from './posts.dto';
 
 @Injectable()
 export class PostsService {
-  sayHello() {
-    return 'Hello wordld';
-  }
-
+  constructor(private readonly prismaService: PrismaService) {}
   getPosts() {
-    return 'Get List Posts';
+    return this.prismaService.post.findMany();
   }
 
-  getPostDetail(id: string) {
-    return `Get Post Detail with id ${id}`;
+  async getPostDetail(id: number) {
+    const postDetail = await this.prismaService.post.findUnique({
+      where: { id },
+    });
+    return postDetail;
   }
 
-  addPost(body: any) {
-    return body
+  async addPost(body: CreatePostBodyDTO) {
+    const newPost = await this.prismaService.post.create({
+      data: body,
+    });
+    return new CreatePostResDTO(newPost);
   }
 
   updatePost(id: string, body: any) {

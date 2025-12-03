@@ -9,8 +9,6 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { PostsService } from './posts.service';
-import { ApiKeyGuard } from 'src/shared/guards/api-key.guard';
-import { AccessTokenGuard } from 'src/shared/guards/access-token.guard';
 import { Auth } from 'src/shared/decorators/auth.decorator';
 import { AuthType, ConditionGuard } from 'src/shared/constants/auth.constant';
 
@@ -32,7 +30,7 @@ export class PostsController {
   }
 
   @Get(':id')
-  getPostDetail(@Param('id') id: string) {
+  getPostDetail(@Param('id') id: number) {
     return this.postService.getPostDetail(id);
   }
 
