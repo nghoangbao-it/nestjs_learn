@@ -18,13 +18,14 @@ export class PostsController {
 
   // @UseGuards(ApiKeyGuard)
   // @UseGuards(AccessTokenGuard)
-  @Auth([AuthType.Bearer, AuthType.ApiKey], ConditionGuard.Or)
+  // @Auth([AuthType.Bearer, AuthType.ApiKey], ConditionGuard.Or)
   @Get()
   getPosts() {
     return this.postService.getPosts();
   }
 
   @Post()
+  @Auth([AuthType.Bearer])
   addPost(@Body() body: any) {
     return this.postService.addPost(body);
   }

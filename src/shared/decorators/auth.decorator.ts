@@ -1,6 +1,6 @@
 
 import { SetMetadata } from '@nestjs/common';
-import { AuthTypeType, ConditionGuardType,  } from '../constants/auth.constant';
+import { AuthTypeType, ConditionGuard, ConditionGuardType,  } from '../constants/auth.constant';
 
 export const AUTH_GUARD_KEY = 'auth_type_key';
 export type AUTH_GUARD_TYPE = {
@@ -8,6 +8,6 @@ export type AUTH_GUARD_TYPE = {
     options: ConditionGuardType
 }
 
-export const Auth = function (authTypes: AuthTypeType[], options: ConditionGuardType ) {
-    return SetMetadata(AUTH_GUARD_KEY, {authTypes, options});
+export const Auth = function (authTypes: AuthTypeType[], options?: ConditionGuardType ) {
+    return SetMetadata(AUTH_GUARD_KEY, {authTypes, options: options ?? ConditionGuard.And} );
 }
